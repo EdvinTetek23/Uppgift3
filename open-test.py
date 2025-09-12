@@ -5,9 +5,17 @@ import locale
 def format_currency(value):
     return locale.currency(value,grouping=True)
 
+def list_products (products):
+    for idx, product in enumerate(products, 1):
+        print(f"{idx} {product["name"]} {product["desc"]} {product["price"]} {product["quantity"]}")
+
+def view_product(idx, products):
+    product = products[idx -1]
+    return product
 
 def load_data(filename): 
-    products = []           #lista
+    products = []  #lista
+    
     with open(filename, 'r') as file:       #öppnar en fil med read-rättighet
         reader = csv.DictReader(file)
         for row in reader:
@@ -21,15 +29,13 @@ def load_data(filename):
                 {                   
                     "id": id,       
                     "name": name,
-                    "desc": desc,
+                    "desc": desc,   
                     "price": price,
                     "quantity": quantity
                 }
             )
             return products
-        
-            
-   
+    
 
 
 #TODO: hur gör man så funktionen load_data returnerar products istället?
@@ -43,5 +49,12 @@ locale.setlocale(locale.LC_ALL, 'sv_SE.UTF-8')
 
 products = load_data('db_products.csv')
 
-#for idx, product in enumerate(products, 1):
- #   print (f"{idx} {products}")
+while True:
+    list_products(products)
+    
+    idx = int(input("Välj product med nummer"))
+    
+    product = view_product(idx, products)
+    print(f"product: {product["name"]} , {product["desc"]}")
+    
+    input()
