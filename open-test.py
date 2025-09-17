@@ -2,12 +2,14 @@ import csv
 import os
 import locale
 
+maxantal = 11
+
 def format_currency(value):
     return locale.currency(value,grouping=True)
 
-def list_products (products):
+def list_products(products):
     for idx, product in enumerate(products, 1):
-        print(f"{idx} {product["name"]} {product["desc"]} {product["price"]} {product["quantity"]}")
+        print(f"{idx} {product["name"]} {product["price"]}kr på lager:{product["quantity"]}")
 
 def view_product(idx, products):
     product = products[idx -1]
@@ -16,7 +18,7 @@ def view_product(idx, products):
 def load_data(filename): 
     products = []  #lista
     
-    with open(filename, 'r') as file:       #öppnar en fil med read-rättighet
+    with open(filename, 'r') as file:
         reader = csv.DictReader(file)
         for row in reader:
             id = int(row['id'])
@@ -25,18 +27,15 @@ def load_data(filename):
             price = float(row['price'])
             quantity = int(row['quantity'])
             
-            products.append(   #dict
+            products.append(
                 {                   
                     "id": id,       
                     "name": name,
                     "desc": desc,   
                     "price": price,
                     "quantity": quantity
-                }
-            )
-            return products
-    
-
+                })
+    return products
 
 #TODO: hur gör man så funktionen load_data returnerar products istället?
 #TODO: gör så man kan se en numrerad lista som börjar på 1.
@@ -57,4 +56,10 @@ while True:
     product = view_product(idx, products)
     print(f"product: {product["name"]} , {product["desc"]}")
     
+    tabort = int(input("ta bort en produkt, skriv produkt nummer:"))
+    
+    if 1 <= tabort <= maxantal:
+        produktbortagen = products.pop(tabort -1) and (maxantal - 1)
+    else:
+        print("Du måste skriva ett produktnummer som existerar")
     input()
