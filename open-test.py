@@ -15,6 +15,14 @@ def view_product(idx, products):
     product = products[idx -1]
     return product
 
+def läggtill (products):
+    id = int(input("välj ett id: "))
+    name = input("N")
+    desc = input("D")
+    price = int(input("P"))
+    quantity = int(input("K"))
+    
+
 def load_data(filename): 
     products = []  #lista
     
@@ -48,11 +56,21 @@ locale.setlocale(locale.LC_ALL, 'sv_SE.UTF-8')
 
 products = load_data('db_products.csv')
 
+
 while True:
-    list_products(products)
     
-    idx = int(input("Välj product med nummer"))
+    option = int(input("vad vill du göra? 1 = visa  2 = ta bort  3 = lägg till"))
     
+    if option == 1:
+        list_products(products)
+        
+        view_product(idx, products)
+    if option == 2:
+        if 1 <= maxantal:
+            idx = int(input("Välj product med nummer"))
+    else:
+        print("Den produkten finns inte")
+        
     product = view_product(idx, products)
     print(f"product: {product["name"]} , {product["desc"]}")
     
@@ -60,6 +78,31 @@ while True:
     
     if 1 <= tabort <= maxantal:
         produktbortagen = products.pop(tabort -1) and (maxantal - 1)
+        print ("Klicka enter för att fortsätta")
     else:
-        print("Du måste skriva ett produktnummer som existerar")
-    input()
+        print("Du måste skriva ett produktnummer som existerar.      Klicka enter:")
+        
+    if option == 3:
+        print("Du valde att skapa din egna produkt.")
+        id = int(input("Skapa ett id till produkten gärna ett som inte existerar"))
+        name = input("Skriv nament på produkten här: ")
+        desc = input("Vad ska beskrivningen vara: ")
+        price = int(input("Skriv priset på produkten: "))
+        quantity = int(input("Skriv hur många av produkten/varan som finns: "))
+        products.append ({"id": id, "name": name, "beskrivning": desc, "pris": price, "Kvantitet": quantity})
+        print ("Du har lagt till ")
+        
+        
+        
+        
+        
+    
+"""  
+läggtill = int(input("Lägg till en produkt"))
+    
+if 1 <= läggtill
+        
+        
+input()
+"""
+
